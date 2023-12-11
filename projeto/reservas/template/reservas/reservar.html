@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        .titulo {
+            padding: 10px;
+            text-align: center;
+            margin-top: 200px;
+            margin-right: 500px;
+        }
+
+        .txt {
+            color: black;
+            font-size: 40px;
+            transition: color 0.2s ease;
+            text-decoration: none;
+        }
+
+        .txt:hover {
+            color: mediumpurple;
+        }
+
+    </style>
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Criar Reserva</h4>
+            <hr>
+            <form action="{% url 'reservar' %}" method="post">
+                {% csrf_token %}
+                {{  form.as_p }}
+                <button class="btn btn-primary" type="submit" >Enviar</button>
+                <a href="{% url 'listar' %}" class="btn btn-danger">Cancelar</a>
+            </form>
+        </div>
+    </div>
+
+    </table>
+
+{% endblock %}

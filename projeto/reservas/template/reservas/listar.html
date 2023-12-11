@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        .titulo {
+            padding: 10px;
+            text-align: center;
+            margin-top: 200px;
+            margin-right: 500px;
+        }
+        
+        .titulo a{
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .txt {
+            color: black;
+            font-size: 40px;
+            transition: color 0.2s ease;
+        }
+        
+        .txt:hover {
+            color: mediumpurple;
+        }
+        
+        .search-form {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-selector {
+            margin-right: 10px;
+        }
+
+        .search-input {
+            margin-right: 10px;
+        }
+    </style>
+    <div class="card">
+        <div class="card-body">
+            <h4>Reservas</h4>
+            <hr>
+        
+            <form class="form-inline search-form">
+                <div class="form-group search-selector">
+                    <label for="search-type">Filtrar por:</label>
+                    <select class="form-control" id="search-type" name="search_type">
+                        <option value="nome">Nome</option>
+                        <option value="numero_voo">Número do voo</option>
+                        <option value="classe">Classe</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="search">Pesquisar:</label>
+                    <input type="text" class="form-control" id="search" name="search" placeholder="Digite aqui...">
+                </div>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
+        
+            <a class="btn btn-success" href="{% url 'reservar' %}">Adicionar</a>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Número do Voo</th>
+                        <th>Origem</th>
+                        <th>Destino</th>
+                        <th>Data Ida</th>
+                        <th>Data Volta</th>
+                        <th>Nome Passageiro</th>
+                        <th>Classe</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for obj in dados %}
+                    <tr>
+                        <td>{{ obj.numero_voo }}</td>
+                        <td>{{ obj.origem }}</td>
+                        <td>{{ obj.destino }}</td>
+                        <td>{{ obj.data_partida }}</td>
+                        <td>{{ obj.data_chegada }}</td>
+                        <td>{{ obj.nome }}</td>
+                        <td>{{ obj.classe }}</td>
+                        <td>
+                            <a class="btn btn-warning" href="{% url 'editar' obj.id %}">Editar</a>
+                            <a class="btn btn-danger" href="{% url 'deletar' obj.id %}"
+                            onclick="return confirm('Tem certeza que deseja excluir esta reserva?')">Excluir</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

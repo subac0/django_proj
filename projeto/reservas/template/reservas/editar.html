@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        .titulo {
+            padding: 10px;
+            text-align: center;
+            margin-top: 200px;
+            margin-right: 500px;
+        }
+
+        .txt {
+            color: black;
+            font-size: 40px;
+            transition: color 0.2s ease;
+            text-decoration: none;
+        }
+
+        .txt:hover {
+            color: mediumpurple;
+        }
+
+    </style>
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Editar Reserva</h4>
+            <hr>
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            
+            <form action="{% url 'editar' id %}" method="post">
+                {% csrf_token %}
+                {{  form.as_p }}
+                <button class="btn btn-success" type="submit" >Salvar</button>
+                <a href="{% url 'listar' %}" class="btn btn-danger">Cancelar</a>
+            </form>
+            
+            <script>
+                $(document).ready(function () {
+                    // Quando o número de voo é alterado
+                    $('#numero_voo').on('input', function () {
+                        var numeroVoo = $(this).val();
+            
+                        // Realiza uma requisição AJAX ao servidor para obter os dados do voo
+                        if (numeroVoo.length >= 4) {
+                            $.ajax({
+                                url: 'reservar/edit/',  // Substitua pelo seu endpoint real
+                                method: 'GET',
+                                data: {numero_voo: numeroVoo},
+                                success: function (data) {
+                                    // Preenche os campos do formulário com os dados obtidos
+                                    $('#origem').val(data.origem).prop('disabled', true);
+                                    $('#destino').val(data.destino).prop('disabled', true);
+                                    $('#data_partida').val(data.data_partida).prop('disabled', true);
+                                },
+                                error: function () {
+                                    // Lidere com erros, se necessário
+                                }
+                            });
+                        } else {
+                            $('#origem').val('').prop('disabled', true);
+                            $('#destino').val('').prop('disabled', true);
+                            $('#data_partida').val('').prop('disabled', true);
+                        }
+                    });
+                });
+            </script>
+        </div>
+    </div>
+
+    </table>
+
+{% endblock %}

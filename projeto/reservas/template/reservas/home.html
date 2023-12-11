@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        .titulo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 75vh;
+        }
+        
+        .titulo a{
+            display: inline-block;
+            text-decoration: none;
+            color: black;
+            font-size: 40px;
+        }
+
+
+        .txt {
+            font-family: monospace;
+            letter-spacing: 2px;
+            color: black;
+            font-size: 40px;
+            border-right: 2px solid;
+            width: 68%;
+            white-space: nowrap;
+            overflow: hidden;
+            transition: transform 0.2s ease, color 0.2s ease;
+            animation:
+                typing 2s steps(39),
+                cursor .6s step-end infinite alternate,
+                repeatTyping 8s infinite;
+
+        }
+
+        .txt:hover {
+            transform: scale(1.1); /* Aumenta o tamanho em 10% ao passar o mouse */
+            color: darkorange; /* Muda a cor ao passar o mouse */
+        }
+
+        @keyframes cursor {
+            50% { border-color: transparent;}
+        }
+
+        @keyframes typing {
+            from { width: 0;}
+        }
+
+        @keyframes repeatTyping {
+            0%, 100% { width: 0; }
+            50% { width: 68%; }
+        }
+
+
+    </style>
+    
+    <script>
+        function getRandomColor() {
+            const colors = ['orange', 'blue', 'green', 'red'];
+            const randomIndex = Math.floor(Math.random() * colors.length);
+            return colors[randomIndex];
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const txtElement = document.querySelector('.txt');
+
+            txtElement.addEventListener('mouseover', function() {
+                const randomColor = getRandomColor();
+                this.style.color = randomColor;
+            });
+        });
+    </script>
+    
+    <div class="titulo">
+        <a href="#" class="txt">Sistema de Reserva de Passagens Aéreas</a>
+    </div>
+
+{% endblock %}
